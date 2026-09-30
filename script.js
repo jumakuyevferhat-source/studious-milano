@@ -50,6 +50,8 @@ function applyStatic() {
   document.documentElement.lang = lang;
   document.title = t("meta.title");
   $('meta[name="description"]').content = t("meta.desc");
+  // ?lang=tr gibi dil adresleri kendi adreslerini canonical gösterir
+  if (new URLSearchParams(location.search).has("lang")) $('link[rel="canonical"]').href = `https://studiousmilano.com/?lang=${lang}`;
   $$("[data-i18n]").forEach((el) => (el.textContent = t(el.dataset.i18n)));
   $$("[data-i18n-html]").forEach((el) => (el.innerHTML = t(el.dataset.i18nHtml)));
   $$("[data-i18n-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.i18nAria)));

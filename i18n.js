@@ -9,7 +9,7 @@ const LANGS = { en: "EN", ru: "RU", tr: "TR" };
 const I18N = {
   en: {
     "meta.title": "Studious Milano | Wholesale Menswear — New Season",
-    "meta.desc": "Studious Milano by NewYork Kids. Wholesale menswear from Istanbul for boutiques and retailers. Sold by series, worldwide shipping, orders via WhatsApp.",
+    "meta.desc": "Studious Milano by NewYork Kids. Wholesale menswear from Merter, Istanbul for boutiques and retailers. Sold by series, worldwide shipping, orders via WhatsApp.",
     "top.1": "Wholesale only — for boutiques & retailers",
     "top.2": "Worldwide shipping — USA · Europe · Russia",
     "top.3": "Sold by series · from {min} series per model",
@@ -82,7 +82,7 @@ const I18N = {
     "contact.text": "Our wholesale team answers on WhatsApp — price list, stock, series and shipping to your country — in English, Russian and Turkish.",
     "contact.cta": "Message on WhatsApp",
     "contact.store": "Showroom",
-    "contact.storeV": "Istanbul, Türkiye",
+    "contact.storeV": "Merter, Istanbul, Türkiye",
     "contact.hours": "Opening Hours",
     "contact.hoursV": "Daily 10:00 – 22:00 (GMT+3)",
     "footer.aria": "Footer menu",
@@ -155,7 +155,7 @@ const I18N = {
 
   ru: {
     "meta.title": "Studious Milano | Мужская одежда оптом — новый сезон",
-    "meta.desc": "Studious Milano by NewYork Kids. Мужская одежда оптом из Стамбула для бутиков и магазинов. Продажа сериями, доставка по всему миру, заказ через WhatsApp.",
+    "meta.desc": "Studious Milano by NewYork Kids. Мужская одежда оптом из Стамбула (Мертер) для бутиков и магазинов. Продажа сериями, доставка по всему миру, заказ через WhatsApp.",
     "top.1": "Только опт — для бутиков и магазинов",
     "top.2": "Доставка по всему миру — США · Европа · Россия",
     "top.3": "Продажа сериями · от {min} серии на модель",
@@ -228,7 +228,7 @@ const I18N = {
     "contact.text": "Оптовый отдел отвечает в WhatsApp: прайс-лист, наличие, серии и доставка в вашу страну — на русском, английском и турецком.",
     "contact.cta": "Написать в WhatsApp",
     "contact.store": "Шоурум",
-    "contact.storeV": "Стамбул, Турция",
+    "contact.storeV": "Мертер, Стамбул, Турция",
     "contact.hours": "Часы работы",
     "contact.hoursV": "Ежедневно 10:00 – 22:00 (GMT+3)",
     "footer.aria": "Нижнее меню",
@@ -301,7 +301,7 @@ const I18N = {
 
   tr: {
     "meta.title": "Studious Milano | Toptan Erkek Giyim — Yeni Sezon",
-    "meta.desc": "Studious Milano by NewYork Kids. Butik ve mağazalar için İstanbul'dan toptan erkek giyim. Seri halinde satış, dünyaya kargo, WhatsApp'tan sipariş.",
+    "meta.desc": "Studious Milano by NewYork Kids. Merter, İstanbul'dan butik ve mağazalar için toptan erkek giyim. Seri halinde satış, dünyaya kargo, WhatsApp'tan sipariş.",
     "top.1": "Sadece toptan — butik ve mağazalar için",
     "top.2": "Dünya geneline kargo — ABD · Avrupa · Rusya",
     "top.3": "Seri halinde satış · model başı en az {min} seri",
@@ -374,7 +374,7 @@ const I18N = {
     "contact.text": "Toptan satış ekibimiz WhatsApp'ta — fiyat listesi, stok, seri ve ülkenize kargo — Türkçe, İngilizce ve Rusça.",
     "contact.cta": "WhatsApp'tan Yaz",
     "contact.store": "Showroom",
-    "contact.storeV": "İstanbul, Türkiye",
+    "contact.storeV": "Merter, İstanbul, Türkiye",
     "contact.hours": "Çalışma Saatleri",
     "contact.hoursV": "Her gün 10:00 – 22:00 (GMT+3)",
     "footer.aria": "Alt menü",
