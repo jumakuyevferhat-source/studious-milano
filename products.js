@@ -12,15 +12,22 @@
    category    : takim | gomlek | tisort | sweat | ceket | pantolon | ayakkabi
    name        : Ürün adı — { en: İngilizce, ru: Rusça, tr: Türkçe }
    description : Açıklama — aynı şekilde üç dilde
-   price       : Fiyat (TL) — SHOW_PRICES false iken görünmez
+   price       : Toptan birim fiyat (TL) — SHOW_PRICES false iken görünmez
    oldPrice    : İndirim varsa eski fiyat, yoksa null
    badge       : "Yeni", "Çok Satan", "İndirim" veya null
    colors      : Türkçe renk adları (i18n.js içinde çevrilir)
+   sizes       : Serideki bedenler, ör. ["S", "M", "L", "XL"]
+   asorti      : (isteğe bağlı) Bir seride her bedenden kaç adet olduğu,
+                 sizes ile aynı sırada. Ör. [1, 2, 2, 1] = 1 seri 6 adet.
+                 Yazılmazsa her bedenden 1 adet sayılır.
    images      : İlk fotoğraf kartta görünür, ikincisi üzerine gelince
    ========================================================= */
 
 // Fiyatlar sitede görünsün mü? (true = görünür, false = gizli)
 const SHOW_PRICES = false;
+
+// TOPTAN: Bir modelden alınabilecek en az seri sayısı
+const MIN_SERIES = 1;
 
 const U = (id, w = 900) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${Math.round(w * 1.25)}&fit=crop&q=80&auto=format`;
@@ -73,12 +80,11 @@ const PRODUCTS = [
 ];
 
 /* =========================================================
-   ANA SAYFA VİTRİNİ (üstteki hareketli bölüm)
+   ANA SAYFA AFİŞİ (en üstteki bölüm)
    ---------------------------------------------------------
-   Başlıkta her zaman marka adı görünür.
-   product : Yukarıdaki listeden ürün id'si ("İncele" bu ürünü açar)
-   image   : Vitrinde görünecek büyük fotoğraf
-   hotspot : Fotoğraftaki yanıp sönen noktanın yeri (% olarak)
+   Başlıkta her zaman marka adı görünür. Listedeki ilk kayıt kullanılır.
+   product : Yukarıdaki listeden ürün id'si (fotoğrafa tıklayınca açılır)
+   image   : Afişte görünecek büyük fotoğraf
    focus   : Fotoğraf kırpılırken ortada kalacak nokta
    ========================================================= */
 const HERO_SLIDES = [
@@ -87,11 +93,11 @@ const HERO_SLIDES = [
     image: "assets/urunler/beyaz-sweat-model.jpg",
     focus: "50% 30%",
     hotspot: { x: 40, y: 70 },
-    eyebrow: { en: "New Season · Street Edit", ru: "Новый сезон · Street Edit", tr: "Yeni Sezon · Street Edit" },
+    eyebrow: { en: "Wholesale · New Season", ru: "Оптом · Новый сезон", tr: "Toptan · Yeni Sezon" },
     text: {
-      en: "Italian elegance meets the energy of the city. Luxury menswear for a new generation — shipped worldwide.",
-      ru: "Итальянская элегантность встречает энергию большого города. Премиальная мужская одежда для нового поколения с доставкой по всему миру.",
-      tr: "İtalyan zarafeti, şehrin enerjisiyle buluştu. Yeni kuşak için lüks erkek giyim — dünyanın her yerine gönderim.",
+      en: "Wholesale menswear from Istanbul for boutiques and retailers. Sold by series, shipped worldwide.",
+      ru: "Мужская одежда оптом из Стамбула для бутиков и магазинов. Продажа сериями, доставка по всему миру.",
+      tr: "Butik ve mağazalar için İstanbul'dan toptan erkek giyim. Seri halinde satış, dünyanın her yerine gönderim.",
     },
     label: "Street Edit",
   },
