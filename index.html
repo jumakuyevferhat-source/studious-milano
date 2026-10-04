@@ -14,7 +14,16 @@
 <meta name="robots" content="index, follow">
 <meta name="geo.region" content="TR-34">
 <meta name="geo.placename" content="Merter, İstanbul">
-<link rel="canonical" href="https://studiousmilano.com/">
+<script>
+// Her dil adresi kendini canonical gösterir; HTML'de sabit canonical yok ki Google çelişki görmesin
+(function () {
+  var q = new URLSearchParams(location.search).get("lang");
+  var l = document.createElement("link");
+  l.rel = "canonical";
+  l.href = "https://studiousmilano.com/" + (/^(en|ru|tr)$/.test(q) ? "?lang=" + q : "");
+  document.head.appendChild(l);
+})();
+</script>
 <link rel="alternate" hreflang="en" href="https://studiousmilano.com/?lang=en">
 <link rel="alternate" hreflang="ru" href="https://studiousmilano.com/?lang=ru">
 <link rel="alternate" hreflang="tr" href="https://studiousmilano.com/?lang=tr">
