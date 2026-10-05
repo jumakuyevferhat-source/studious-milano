@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Studious Milano — Yönetim Paneli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23000%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2720%27 fill=%27%23fff%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
+<style>
+  :root { --ink: #111; --muted: #6b6b6b; --line: #e3e3e3; --bg: #f5f5f4; --card: #fff; --ok: #1a7f37; --bad: #c62828; --wa: #25d366; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 Roboto, system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  img { display: block; max-width: 100%; }
+  [hidden] { display: none !important; }
+
+  .top { position: sticky; top: 0; z-index: 10; background: #000; color: #fff; }
+  .top-in { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
+  .logo { font-weight: 700; letter-spacing: .18em; }
+  .logo small { display: block; font-weight: 400; letter-spacing: .1em; font-size: 11px; opacity: .7; }
+  .top-in .sp { flex: 1; }
+  .top a, .top .ghost { color: #fff; font-size: 13px; opacity: .8; background: none; border: 0; cursor: pointer; text-decoration: none; }
+  .top a:hover, .top .ghost:hover { opacity: 1; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 120px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+  .card h2 { margin: 0 0 4px; font-size: 18px; }
+  .card .hint { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+  .head-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .head-row h2 { margin: 0; flex: 1; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 6px; border: 1px solid var(--ink); background: var(--ink); color: #fff; cursor: pointer; font-weight: 500; white-space: nowrap; }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .btn.light { background: #fff; color: var(--ink); border-color: var(--line); }
+  .btn.light:hover { border-color: var(--ink); }
+  .btn.danger { background: #fff; color: var(--bad); border-color: #f0c4c4; }
+  .btn.sm { padding: 5px 10px; font-size: 13px; }
+  .btn.wa { background: var(--wa); border-color: var(--wa); color: #fff; }
+
+  label.f { display: block; margin-bottom: 12px; }
+  label.f > span { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+  input[type=text], input[type=number], input[type=password], input[type=search], select, textarea {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; background: #fff;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--ink); outline-offset: -1px; }
+  textarea { min-height: 76px; resize: vertical; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 14px; }
+  @media (max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  .check { display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 12px; }
+  .check input { width: 18px; height: 18px; }
+
+  /* Ürün listesi */
+  .list { list-style: none; margin: 0; padding: 0; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .row img { width: 56px; height: 70px; object-fit: cover; border-radius: 4px; background: #eee; flex: none; }
+  .row-info { flex: 1; min-width: 0; }
+  .row-info strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-info small { color: var(--muted); }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 99px; background: #eee; margin-left: 4px; vertical-align: 1px; }
+  .tag.hero { background: #111; color: #fff; }
+  .row-act { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .row-act .mv { width: 32px; padding: 5px 0; }
+  @media (max-width: 640px) {
+    .row { flex-wrap: wrap; }
+    .row-act { width: 100%; justify-content: flex-start; padding-left: 68px; }
+  }
+  .empty { color: var(--muted); padding: 20px 0; text-align: center; }
+
+  /* Yayın çubuğu */
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -6px 20px rgba(0,0,0,.06); }
+  .bar-in { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
+  .bar-msg { flex: 1; font-size: 14px; color: var(--muted); }
+  .bar-msg.dirty { color: #b26a00; font-weight: 500; }
+  .bar-msg.ok { color: var(--ok); }
+  .bar-msg.bad { color: var(--bad); }
+
+  /* Giriş */
+  .login { max-width: 460px; margin: 8vh auto; padding: 0 16px; }
+  .login .card { padding: 26px; }
+  .login h1 { font-size: 22px; margin: 0 0 6px; }
+  .login ol { padding-left: 20px; color: var(--muted); font-size: 13px; margin: 14px 0 0; }
+  .login ol li { margin-bottom: 4px; }
+  .err { color: var(--bad); font-size: 14px; min-height: 20px; margin: 8px 0 0; }
+
+  /* Düzenleme penceresi */
+  dialog { width: min(760px, 100vw); max-height: 100dvh; padding: 0; border: 0; border-radius: 12px; }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  @media (max-width: 640px) { dialog { border-radius: 0; height: 100dvh; max-width: 100vw; margin: 0; } }
+  .dlg-head { position: sticky; top: 0; z-index: 2; background: #fff; display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .dlg-head h3 { margin: 0; flex: 1; font-size: 17px; }
+  .dlg-body { padding: 18px; }
+  .dlg-foot { position: sticky; bottom: 0; background: #fff; display: flex; gap: 10px; justify-content: flex-end; padding: 12px 18px; border-top: 1px solid var(--line); }
+  fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px 4px; margin: 0 0 16px; }
+  legend { font-weight: 500; padding: 0 6px; font-size: 14px; }
+  legend .btn { margin-left: 8px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 6px 4px 11px; border-radius: 99px; background: #f0f0f0; font-size: 14px; }
+  .chip button { border: 0; background: none; cursor: pointer; font-size: 16px; line-height: 1; padding: 0 4px; color: var(--muted); }
+  .chip button:hover { color: var(--bad); }
+  .inline { display: flex; gap: 8px; margin-bottom: 12px; }
+  .inline input { flex: 1; }
+
+  .sizes { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  .sizes th { font-size: 12px; color: var(--muted); text-align: left; font-weight: 500; padding: 0 6px 4px 0; }
+  .sizes td { padding: 0 6px 6px 0; }
+  .sizes td:last-child { width: 36px; }
+  .presets { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+  .note { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+
+  .imgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .img { position: relative; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #f3f3f3; }
+  .img.sel { outline: 3px solid var(--ink); }
+  .img img { width: 100%; aspect-ratio: 4/5; object-fit: cover; cursor: pointer; }
+  .img .first { position: absolute; top: 6px; left: 6px; background: #000; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; }
+  .img .new { position: absolute; top: 6px; right: 6px; background: #b26a00; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; }
+  .img-act { display: flex; border-top: 1px solid var(--line); }
+  .img-act button { flex: 1; border: 0; background: #fff; padding: 5px 0; cursor: pointer; }
+  .img-act button:hover { background: #f0f0f0; }
+  .img-act button:disabled { opacity: .3; cursor: default; }
+  .upload { display: inline-flex; }
+  .upload input { display: none; }
+
+  .hero-grid { display: grid; grid-template-columns: 200px 1fr; gap: 18px; }
+  .hero-prev { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 8px; background: #eee; }
+  @media (max-width: 640px) { .hero-grid { grid-template-columns: 1fr; } .hero-prev { max-width: 220px; } }
+
+  .toast { position: fixed; left: 50%; bottom: 80px; transform: translateX(-50%); z-index: 50; background: #111; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 14px; max-width: calc(100vw - 32px); }
+  .toast.bad { background: var(--bad); }
+</style>
+</head>
+<body>
+
+<!-- GİRİŞ -->
+<div class="login" id="login" hidden>
+  <div class="card">
+    <h1>Yönetim Paneli</h1>
+    <p class="hint">Studious Milano — ürün ekleme, düzenleme ve afiş ayarları.</p>
+    <form id="loginForm">
+      <label class="f"><span>Giriş anahtarı (GitHub token)</span>
+        <input type="password" id="tokenInput" autocomplete="current-password" required placeholder="github_pat_...">
+      </label>
+      <button class="btn" style="width:100%">Giriş yap</button>
+      <p class="err" id="loginErr"></p>
+    </form>
+    <details>
+      <summary style="cursor:pointer;font-size:13px">Anahtarı nasıl alırım?</summary>
+      <ol>
+        <li>github.com → sağ üst profil → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b></li>
+        <li><b>Repository access</b>: Only select repositories → <b>studious-milano</b></li>
+        <li><b>Permissions</b> → Repository permissions → <b>Contents: Read and write</b></li>
+        <li>Oluşan anahtarı kopyalayıp buraya yapıştırın. Bu cihazda hatırlanır.</li>
+      </ol>
+    </details>
+  </div>
+</div>
+
+<!-- PANEL -->
+<div id="app" hidden>
+  <header class="top">
+    <div class="top-in">
+      <div class="logo">STUDIOUS<small>YÖNETİM PANELİ</small></div>
+      <span class="sp"></span>
+      <a href="./" target="_blank" rel="noopener">Siteyi aç ↗</a>
+      <button class="ghost" id="logout" type="button">Çıkış</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="head-row">
+        <h2>Ürünler <span class="tag" id="pCount">0</span></h2>
+        <input type="search" id="q" placeholder="Ara: ad, kod…" style="max-width:220px">
+        <button class="btn" id="addBtn" type="button">+ Yeni ürün</button>
+      </div>
+      <p class="hint">Sıralama sitede görünen sıradır. ↑ ↓ ile yerini değiştirin.</p>
+      <ul class="list" id="list"></ul>
+      <p class="empty" id="listEmpty" hidden>Ürün bulunamadı.</p>
+    </section>
+
+    <section class="card">
+      <h2>Ana sayfa afişi</h2>
+      <p class="hint">Sitenin en üstündeki büyük fotoğraf ve yazı.</p>
+      <div class="hero-grid">
+        <img class="hero-prev" id="hPrev" alt="">
+        <div>
+          <label class="f"><span>Afişteki ürün</span><select id="hProduct"></select></label>
+          <span class="note">Afiş fotoğrafı (tıklayıp seçin):</span>
+          <div class="imgs" id="hImgs"></div>
+          <div class="grid2">
+            <label class="f"><span>Fotoğrafın odak noktası</span>
+              <select id="hFocus">
+                <option value="50% 15%">En üst</option>
+                <option value="50% 30%">Üst</option>
+                <option value="50% 50%">Orta</option>
+                <option value="50% 70%">Alt</option>
+              </select>
+            </label>
+            <label class="f"><span>Etiket</span><input type="text" id="hLabel"></label>
+          </div>
+        </div>
+      </div>
+      <fieldset>
+        <legend>Üst küçük yazı <button class="btn light sm" type="button" data-tr="hEyebrow">TR → EN/RU çevir</button></legend>
+        <div class="grid3">
+          <label class="f"><span>Türkçe</span><input type="text" id="hEyebrow_tr"></label>
+          <label class="f"><span>English</span><input type="text" id="hEyebrow_en"></label>
+          <label class="f"><span>Русский</span><input type="text" id="hEyebrow_ru"></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Açıklama <button class="btn light sm" type="button" data-tr="hText">TR → EN/RU çevir</button></legend>
+        <label class="f"><span>Türkçe</span><textarea id="hText_tr"></textarea></label>
+        <label class="f"><span>English</span><textarea id="hText_en"></textarea></label>
+        <label class="f"><span>Русский</span><textarea id="hText_ru"></textarea></label>
+      </fieldset>
+    </section>
+
+    <section class="card">
+      <h2>Ayarlar</h2>
+      <p class="hint">Tüm site için geçerli.</p>
+      <label class="check"><input type="checkbox" id="sPrices"> Fiyatlar sitede görünsün</label>
+      <label class="f" style="max-width:260px"><span>En az sipariş (seri)</span><input type="number" id="sMin" min="1" step="1"></label>
+    </section>
+  </main>
+
+  <div class="bar">
+    <div class="bar-in">
+      <span class="bar-msg" id="barMsg">Yükleniyor…</span>
+      <button class="btn light" id="reloadBtn" type="button">Yenile</button>
+      <button class="btn" id="publishBtn" type="button" disabled>Yayınla</button>
+    </div>
+  </div>
+</div>
+
+<!-- ÜRÜN DÜZENLEME -->
+<dialog id="ed">
+  <form id="edForm" novalidate>
+    <div class="dlg-head">
+      <h3 id="edTitle">Ürün</h3>
+      <button class="btn light sm" type="button" data-cancel>✕</button>
+    </div>
+    <div class="dlg-body">
+      <fieldset>
+        <legend>Fotoğraflar</legend>
+        <p class="note">İlk fotoğraf kartta görünür, ikincisi üzerine gelince. Telefondan direkt yükleyebilirsiniz.</p>
+        <div class="imgs" id="eImgs"></div>
+        <label class="btn light upload">+ Fotoğraf ekle<input type="file" id="eFile" accept="image/*" multiple></label>
+        <div style="height:12px"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Genel</legend>
+        <div class="grid2">
+          <label class="f"><span>Ürün kodu *</span><input type="text" id="eCode" placeholder="SM-TS-304"></label>
+          <label class="f"><span>Kategori *</span><select id="eCat"></select></label>
+          <label class="f"><span>Rozet</span>
+            <select id="eBadge">
+              <option value="">Yok</option>
+              <option>Yeni</option>
+              <option>Çok Satan</option>
+              <option>İndirim</option>
+            </select>
+          </label>
+          <div class="grid2" style="gap:0 10px">
+            <label class="f"><span>Fiyat (₺)</span><input type="number" id="ePrice" min="0" step="1"></label>
+            <label class="f"><span>Eski fiyat</span><input type="number" id="eOld" min="0" step="1"></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Ürün adı <button class="btn light sm" type="button" data-tr="eName">TR → EN/RU çevir</button></legend>
+        <div class="grid3">
+          <label class="f"><span>Türkçe *</span><input type="text" id="eName_tr"></label>
+          <label class="f"><span>English</span><input type="text" id="eName_en"></label>
+          <label class="f"><span>Русский</span><input type="text" id="eName_ru"></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Açıklama <button class="btn light sm" type="button" data-tr="eDesc">TR → EN/RU çevir</button></legend>
+        <label class="f"><span>Türkçe</span><textarea id="eDesc_tr"></textarea></label>
+        <label class="f"><span>English</span><textarea id="eDesc_en"></textarea></label>
+        <label class="f"><span>Русский</span><textarea id="eDesc_ru"></textarea></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Renkler</legend>
+        <div class="chips" id="eColors"></div>
+        <div class="inline">
+          <input type="text" id="eColorIn" list="colorList" placeholder="Renk yazın veya seçin (ör. Siyah)">
+          <button class="btn light" type="button" id="eColorAdd">Ekle</button>
+        </div>
+        <datalist id="colorList"></datalist>
+        <p class="note" id="eColorNote" hidden></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Bedenler ve asorti</legend>
+        <div class="presets">Hazır:
+          <button class="btn light sm" type="button" data-preset="S,M,L,XL">S–XL</button>
+          <button class="btn light sm" type="button" data-preset="S,M,L,XL,XXL">S–XXL</button>
+          <button class="btn light sm" type="button" data-preset="M,L,XL,XXL,3XL">M–3XL</button>
+          <button class="btn light sm" type="button" data-preset="46,48,50,52,54">46–54</button>
+          <button class="btn light sm" type="button" data-preset="29,30,31,32,33,34,36">29–36</button>
+          <button class="btn light sm" type="button" data-preset="40,41,42,43,44">40–44</button>
+        </div>
+        <table class="sizes">
+          <thead><tr><th>Beden</th><th>Seride kaç adet</th><th></th></tr></thead>
+          <tbody id="eSizes"></tbody>
+        </table>
+        <button class="btn light sm" type="button" id="eSizeAdd">+ Beden ekle</button>
+        <p class="note" id="eSeries" style="margin-top:10px"></p>
+      </fieldset>
+      <p class="err" id="edErr"></p>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn light" type="button" data-cancel>Vazgeç</button>
+      <button class="btn" type="submit">Kaydet</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="i18n.js"></script>
+<script>
+// ---------- Ayarlar ----------
+const REPO = "jumakuyevferhat-source/studious-milano";
+const BRANCH = "main";
+const FILE = "products.js";
+const API = `https://api.github.com/repos/${REPO}/contents/`;
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ls = {
+  get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+  del: (k) => { try { localStorage.removeItem(k); } catch {} },
+};
+
+let token = ls.get("sm-admin-token");
+let data = null;      // { SHOW_PRICES, MIN_SERIES, PRODUCTS, HERO_SLIDES }
+let fileSha = null;
+let pending = {};     // yeni fotoğraflar: yol -> base64
+let previews = {};    // yol -> dataURL (yayınlanana kadar önizleme)
+let dirty = false;
+
+// ---------- Yardımcılar ----------
+const fromB64 = (b64) => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\s/g, "")), (c) => c.charCodeAt(0)));
+function toB64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+const src = (p) => previews[p] || p;
+const catTr = (k) => CATEGORY_NAMES[k]?.tr || k;
+const hero = () => data.HERO_SLIDES[0];
+
+function toast(msg, bad = false) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.className = "toast" + (bad ? " bad" : "");
+  t.hidden = false;
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => (t.hidden = true), bad ? 6000 : 3000);
+}
+
+function setBar(msg, cls = "") {
+  $("#barMsg").textContent = msg;
+  $("#barMsg").className = "bar-msg " + cls;
+}
+function markDirty() {
+  dirty = true;
+  $("#publishBtn").disabled = false;
+  setBar("Kaydedilmemiş değişiklik var — sitede görünmesi için “Yayınla”ya basın.", "dirty");
+}
+window.addEventListener("beforeunload", (e) => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+async function gh(path, opts = {}) {
+  const url = API + path.split("/").map(encodeURIComponent).join("/") + (opts.method ? "" : `?ref=${BRANCH}`);
+  const r = await fetch(url, {
+    ...opts,
+    cache: "no-store",
+    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", ...(opts.body ? { "Content-Type": "application/json" } : {}) },
+  });
+  if (!r.ok) {
+    const e = new Error((await r.json().catch(() => ({}))).message || r.statusText);
+    e.status = r.status;
+    throw e;
+  }
+  return r.json();
+}
+
+async function translate(text, tl) {
+  const r = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=tr&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`);
+  if (!r.ok) throw new Error("çeviri");
+  const j = await r.json();
+  return j[0].map((x) => x[0]).join("");
+}
+
+// ---------- Giriş ----------
+function showLogin(msg = "") {
+  $("#app").hidden = true;
+  $("#login").hidden = false;
+  $("#loginErr").textContent = msg;
+  $("#tokenInput").focus();
+}
+$("#loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  token = $("#tokenInput").value.trim();
+  $("#loginErr").textContent = "Kontrol ediliyor…";
+  try {
+    await load();
+    ls.set("sm-admin-token", token);
+    $("#tokenInput").value = "";
+  } catch (err) {
+    showLogin(err.status === 401 || err.status === 403 || err.status === 404
+      ? "Anahtar geçersiz veya bu siteye yetkisi yok."
+      : "Bağlanılamadı: " + err.message);
+  }
+});
+$("#logout").addEventListener("click", () => {
+  if (dirty && !confirm("Yayınlanmamış değişiklikler silinecek. Çıkılsın mı?")) return;
+  dirty = false;
+  ls.del("sm-admin-token");
+  token = null;
+  showLogin();
+});
+
+// ---------- Yükleme ----------
+async function load() {
+  const f = await gh(FILE);
+  const text = fromB64(f.content);
+  data = new Function(text + "\nreturn { SHOW_PRICES, MIN_SERIES, PRODUCTS, HERO_SLIDES };")();
+  fileSha = f.sha;
+  pending = {};
+  dirty = false;
+  $("#login").hidden = true;
+  $("#app").hidden = false;
+  $("#publishBtn").disabled = true;
+  setBar("Site ile aynı. Değişiklik yok.");
+  renderAll();
+}
+$("#reloadBtn").addEventListener("click", async () => {
+  if (dirty && !confirm("Yayınlanmamış değişiklikler silinecek. Yenilensin mi?")) return;
+  try { await load(); toast("Güncel liste yüklendi"); } catch (e) { toast("Yüklenemedi: " + e.message, true); }
+});
+
+// ---------- Ürün listesi ----------
+function renderList() {
+  const q = $("#q").value.trim().toLocaleLowerCase("tr");
+  const heroId = hero()?.product;
+  const rows = data.PRODUCTS.map((p, i) => ({ p, i })).filter(({ p }) =>
+    !q || [p.code, ...Object.values(p.name || {})].join(" ").toLocaleLowerCase("tr").includes(q));
+  $("#pCount").textContent = data.PRODUCTS.length;
+  $("#listEmpty").hidden = rows.length > 0;
+  $("#list").innerHTML = rows.map(({ p, i }) => `<li class="row" data-i="${i}">
+      <img src="${esc(src(p.images[0]))}" alt="" loading="lazy">
+      <div class="row-info">
+        <strong>${esc(p.name?.tr || p.name?.en)}</strong>
+        <small>${esc(p.code)} · ${esc(catTr(p.category))}${p.badge ? `<span class="tag">${esc(p.badge)}</span>` : ""}${p.id === heroId ? `<span class="tag hero">Afiş</span>` : ""}</small>
+      </div>
+      <div class="row-act">
+        <button class="btn light sm mv" type="button" data-act="up" aria-label="Yukarı" ${i === 0 || q ? "disabled" : ""}>↑</button>
+        <button class="btn light sm mv" type="button" data-act="down" aria-label="Aşağı" ${i === data.PRODUCTS.length - 1 || q ? "disabled" : ""}>↓</button>
+        <button class="btn light sm" type="button" data-act="edit">Düzenle</button>
+        <button class="btn danger sm" type="button" data-act="del">Sil</button>
+      </div>
+    </li>`).join("");
+}
+$("#q").addEventListener("input", renderList);
+$("#list").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-act]");
+  if (!b) return;
+  const i = +b.closest(".row").dataset.i;
+  const P = data.PRODUCTS;
+  const act = b.dataset.act;
+  if (act === "edit") return openEditor(P[i]);
+  if (act === "up" || act === "down") {
+    const j = act === "up" ? i - 1 : i + 1;
+    [P[i], P[j]] = [P[j], P[i]];
+  } else if (act === "del") {
+    if (P[i].id === hero()?.product) return toast("Bu ürün afişte. Önce afişte başka bir ürün seçin.", true);
+    if (!confirm(`“${P[i].name?.tr || P[i].code}” silinsin mi?`)) return;
+    P.splice(i, 1);
+  }
+  markDirty();
+  renderList();
+  renderHero();
+});
+
+// ---------- Ürün düzenleme ----------
+const dlg = $("#ed");
+let ed = null;      // düzenlenen ürünün çalışma kopyası
+let edOrig = null;  // null = yeni ürün
+
+$("#eCat").innerHTML = Object.keys(CATEGORY_NAMES).map((k) => `<option value="${k}">${esc(catTr(k))}</option>`).join("");
+$("#colorList").innerHTML = Object.keys(COLOR_NAMES).map((c) => `<option value="${esc(c)}">`).join("");
+
+function openEditor(p) {
+  edOrig = p || null;
+  const base = p || { code: "", category: "tisort", price: 0, oldPrice: null, badge: "Yeni", name: {}, description: {}, colors: [], sizes: ["S", "M", "L", "XL", "XXL"], images: [] };
+  ed = {
+    colors: [...base.colors],
+    sizes: base.sizes.map((s, i) => ({ s, n: base.asorti?.[i] ?? 1 })),
+    images: [...base.images],
+  };
+  $("#edTitle").textContent = p ? "Ürünü düzenle" : "Yeni ürün";
+  $("#eCode").value = base.code;
+  $("#eCat").value = base.category;
+  $("#eBadge").value = base.badge || "";
+  $("#ePrice").value = base.price || "";
+  $("#eOld").value = base.oldPrice || "";
+  for (const l of ["tr", "en", "ru"]) {
+    $("#eName_" + l).value = base.name?.[l] || "";
+    $("#eDesc_" + l).value = base.description?.[l] || "";
+  }
+  $("#edErr").textContent = "";
+  renderEdImgs();
+  renderEdColors();
+  renderEdSizes();
+  dlg.showModal();
+  dlg.querySelector(".dlg-body").scrollTop = 0;
+}
+$("#addBtn").addEventListener("click", () => openEditor(null));
+$$("[data-cancel]", dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
+
+// Fotoğraflar
+function renderEdImgs() {
+  const n = ed.images.length;
+  $("#eImgs").innerHTML = ed.images.map((p, i) => `<div class="img" data-i="${i}">
+      ${i === 0 ? `<span class="first">KART</span>` : ""}${pending[p] ? `<span class="new">YENİ</span>` : ""}
+      <img src="${esc(src(p))}" alt="">
+      <div class="img-act">
+        <button type="button" data-m="-1" aria-label="Sola" ${i === 0 ? "disabled" : ""}>←</button>
+        <button type="button" data-m="x" aria-label="Kaldır">✕</button>
+        <button type="button" data-m="1" aria-label="Sağa" ${i === n - 1 ? "disabled" : ""}>→</button>
+      </div>
+    </div>`).join("");
+}
+$("#eImgs").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-m]");
+  if (!b) return;
+  const i = +b.closest(".img").dataset.i;
+  if (b.dataset.m === "x") ed.images.splice(i, 1);
+  else {
+    const j = i + +b.dataset.m;
+    [ed.images[i], ed.images[j]] = [ed.images[j], ed.images[i]];
+  }
+  renderEdImgs();
+});
+
+const slug = (s) => s.toLocaleLowerCase("tr").replace(/ı/g, "i").normalize("NFD").replace(/[̀-ͯ]/g, "")
+  .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "urun";
+
+async function resizeImage(file, max = 1600) {
+  let img;
+  try { img = await createImageBitmap(file); }
+  catch {
+    img = await new Promise((res, rej) => {
+      const im = new Image();
+      im.onload = () => res(im);
+      im.onerror = () => rej(new Error("Fotoğraf okunamadı"));
+      im.src = URL.createObjectURL(file);
+    });
+  }
+  const k = Math.min(1, max / Math.max(img.width, img.height));
+  const c = document.createElement("canvas");
+  c.width = Math.round(img.width * k);
+  c.height = Math.round(img.height * k);
+  c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+  return c.toDataURL("image/jpeg", 0.86);
+}
+
+async function addPhotos(files, name) {
+  const paths = [];
+  for (const f of files) {
+    try {
+      const url = await resizeImage(f);
+      const path = `assets/urunler/${slug(name)}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}.jpg`;
+      pending[path] = url.split(",")[1];
+      previews[path] = url;
+      paths.push(path);
+    } catch {
+      toast(`“${f.name}” okunamadı. JPG veya PNG deneyin.`, true);
+    }
+  }
+  return paths;
+}
+$("#eFile").addEventListener("change", async (e) => {
+  const files = [...e.target.files];
+  e.target.value = "";
+  ed.images.push(...(await addPhotos(files, $("#eCode").value || $("#eName_tr").value)));
+  renderEdImgs();
+});
+
+// Renkler
+function renderEdColors() {
+  $("#eColors").innerHTML = ed.colors.map((c, i) =>
+    `<span class="chip">${esc(c)}<button type="button" data-i="${i}" aria-label="Kaldır">×</button></span>`).join("") ||
+    `<span class="note" style="margin:0">Henüz renk yok.</span>`;
+  const unknown = ed.colors.flatMap((c) => c.split(" / ")).filter((c) => !COLOR_NAMES[c]);
+  $("#eColorNote").hidden = !unknown.length;
+  $("#eColorNote").textContent = `Not: ${unknown.join(", ")} için hazır çeviri yok; İngilizce ve Rusça sayfada Türkçe adıyla görünür.`;
+}
+$("#eColors").addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  ed.colors.splice(+b.dataset.i, 1);
+  renderEdColors();
+});
+function addColor() {
+  const v = $("#eColorIn").value.trim().replace(/\s*\/\s*/g, " / ");
+  if (v && !ed.colors.includes(v)) ed.colors.push(v);
+  $("#eColorIn").value = "";
+  renderEdColors();
+}
+$("#eColorAdd").addEventListener("click", addColor);
+$("#eColorIn").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addColor(); } });
+
+// Bedenler
+function readSizes() {
+  ed.sizes = $$("#eSizes tr").map((tr) => ({ s: $("[data-s]", tr).value.trim(), n: Math.max(1, parseInt($("[data-n]", tr).value) || 1) }));
+}
+function renderEdSizes() {
+  $("#eSizes").innerHTML = ed.sizes.map((x, i) => `<tr data-i="${i}">
+      <td><input type="text" data-s value="${esc(x.s)}"></td>
+      <td><input type="number" data-n min="1" step="1" value="${x.n}"></td>
+      <td><button class="btn light sm" type="button" data-del aria-label="Kaldır">✕</button></td>
+    </tr>`).join("");
+  renderSeries();
+}
+function renderSeries() {
+  const list = ed.sizes.filter((x) => x.s);
+  const total = list.reduce((a, x) => a + x.n, 0);
+  $("#eSeries").textContent = list.length
+    ? `1 seri = ${list.map((x) => (x.n > 1 ? `${x.s}×${x.n}` : x.s)).join("-")} = ${total} adet`
+    : "En az bir beden ekleyin.";
+}
+$("#eSizes").addEventListener("input", () => { readSizes(); renderSeries(); });
+$("#eSizes").addEventListener("click", (e) => {
+  if (!e.target.closest("[data-del]")) return;
+  readSizes();
+  ed.sizes.splice(+e.target.closest("tr").dataset.i, 1);
+  renderEdSizes();
+});
+$("#eSizeAdd").addEventListener("click", () => {
+  readSizes();
+  ed.sizes.push({ s: "", n: 1 });
+  renderEdSizes();
+  $("#eSizes tr:last-child [data-s]").focus();
+});
+$$("[data-preset]").forEach((b) => b.addEventListener("click", () => {
+  ed.sizes = b.dataset.preset.split(",").map((s) => ({ s, n: 1 }));
+  renderEdSizes();
+}));
+
+// Çeviri düğmeleri (ürün ve afiş)
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-tr]");
+  if (!b) return;
+  const key = b.dataset.tr;
+  const text = $(`#${key}_tr`).value.trim();
+  if (!text) return toast("Önce Türkçe metni yazın.", true);
+  b.disabled = true;
+  try {
+    for (const l of ["en", "ru"]) {
+      $(`#${key}_${l}`).value = await translate(text, l);
+      $(`#${key}_${l}`).dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  } catch {
+    toast("Otomatik çeviri şu an çalışmadı; elle yazabilirsiniz.", true);
+  }
+  b.disabled = false;
+});
+
+const langObj = (id) => {
+  const o = {};
+  for (const l of ["en", "ru", "tr"]) { const v = $(`#${id}_${l}`).value.trim(); if (v) o[l] = v; }
+  return o;
+};
+
+$("#edForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  readSizes();
+  const code = $("#eCode").value.trim();
+  const name = langObj("eName");
+  const sizes = ed.sizes.filter((x) => x.s);
+  const err = !code ? "Ürün kodu yazın."
+    : data.PRODUCTS.some((p) => p.code === code && p !== edOrig) ? "Bu ürün kodu başka bir üründe var."
+    : !name.tr ? "Türkçe ürün adını yazın."
+    : !ed.images.length ? "En az bir fotoğraf ekleyin."
+    : !sizes.length ? "En az bir beden ekleyin."
+    : new Set(sizes.map((x) => x.s)).size !== sizes.length ? "Aynı beden iki kez yazılmış."
+    : "";
+  if (err) { $("#edErr").textContent = err; return; }
+
+  const p = {
+    ...(edOrig || {}),
+    id: edOrig ? edOrig.id : Math.max(0, ...data.PRODUCTS.map((x) => x.id)) + 1,
+    code,
+    category: $("#eCat").value,
+    price: +$("#ePrice").value || 0,
+    oldPrice: +$("#eOld").value || null,
+    badge: $("#eBadge").value || null,
+    name,
+    description: langObj("eDesc"),
+    colors: ed.colors,
+    sizes: sizes.map((x) => x.s),
+    asorti: sizes.map((x) => x.n),
+    images: ed.images,
+  };
+  if (p.asorti.every((n) => n === 1)) delete p.asorti;
+
+  if (edOrig) data.PRODUCTS[data.PRODUCTS.indexOf(edOrig)] = p;
+  else data.PRODUCTS.unshift(p);
+  dlg.close();
+  markDirty();
+  renderList();
+  renderHero();
+  toast(edOrig ? "Ürün güncellendi" : "Ürün eklendi — yayınlamayı unutmayın");
+});
+
+// ---------- Afiş ----------
+function renderHero() {
+  const h = hero();
+  if (!h) return;
+  const p = data.PRODUCTS.find((x) => x.id === h.product);
+  $("#hProduct").innerHTML = data.PRODUCTS.map((x) =>
+    `<option value="${x.id}" ${x.id === h.product ? "selected" : ""}>${esc(x.name?.tr || x.name?.en)} (${esc(x.code)})</option>`).join("");
+  const imgs = [...new Set([h.image, ...(p?.images || [])])];
+  $("#hImgs").innerHTML = imgs.map((s) => `<div class="img ${s === h.image ? "sel" : ""}" data-src="${esc(s)}"><img src="${esc(src(s))}" alt=""></div>`).join("") +
+    `<label class="btn light upload" style="align-self:center">+ Yükle<input type="file" id="hFile" accept="image/*"></label>`;
+  $("#hPrev").src = src(h.image);
+  $("#hPrev").style.objectPosition = h.focus || "50% 50%";
+  const f = $("#hFocus");
+  if (![...f.options].some((o) => o.value === h.focus)) f.add(new Option(`Özel (${h.focus})`, h.focus));
+  f.value = h.focus || "50% 50%";
+  $("#hLabel").value = h.label || "";
+  for (const l of ["tr", "en", "ru"]) {
+    $("#hEyebrow_" + l).value = h.eyebrow?.[l] || "";
+    $("#hText_" + l).value = h.text?.[l] || "";
+  }
+}
+$("#hProduct").addEventListener("change", (e) => {
+  const h = hero();
+  h.product = +e.target.value;
+  const p = data.PRODUCTS.find((x) => x.id === h.product);
+  h.image = p.images[0];
+  markDirty();
+  renderHero();
+  renderList();
+});
+$("#hImgs").addEventListener("click", (e) => {
+  const d = e.target.closest("[data-src]");
+  if (!d) return;
+  hero().image = d.dataset.src;
+  markDirty();
+  renderHero();
+});
+$("#hImgs").addEventListener("change", async (e) => {
+  if (e.target.id !== "hFile") return;
+  const [path] = await addPhotos([...e.target.files], "afis");
+  if (!path) return;
+  hero().image = path;
+  markDirty();
+  renderHero();
+});
+$("#hFocus").addEventListener("change", (e) => {
+  hero().focus = e.target.value;
+  $("#hPrev").style.objectPosition = e.target.value;
+  markDirty();
+});
+$("#hLabel").addEventListener("input", (e) => { hero().label = e.target.value; markDirty(); });
+for (const l of ["tr", "en", "ru"]) {
+  $("#hEyebrow_" + l).addEventListener("input", (e) => { hero().eyebrow = { ...hero().eyebrow, [l]: e.target.value.trim() }; markDirty(); });
+  $("#hText_" + l).addEventListener("input", (e) => { hero().text = { ...hero().text, [l]: e.target.value.trim() }; markDirty(); });
+}
+
+// ---------- Ayarlar ----------
+function renderSettings() {
+  $("#sPrices").checked = data.SHOW_PRICES;
+  $("#sMin").value = data.MIN_SERIES;
+}
+$("#sPrices").addEventListener("change", (e) => { data.SHOW_PRICES = e.target.checked; markDirty(); });
+$("#sMin").addEventListener("input", (e) => { data.MIN_SERIES = Math.max(1, parseInt(e.target.value) || 1); markDirty(); });
+
+function renderAll() {
+  renderList();
+  renderHero();
+  renderSettings();
+}
+
+// ---------- products.js dosyasını yeniden yazma ----------
+const S = JSON.stringify;
+const arr = (a) => `[${a.map(S).join(", ")}]`;
+const ml = (o = {}) => `{ ${["en", "ru", "tr"].filter((k) => o[k]).map((k) => `${k}: ${S(o[k])}`).join(", ")} }`;
+const mlBlock = (o = {}) => !["en", "ru", "tr"].some((k) => o[k]) ? "{}" : `{\n${["en", "ru", "tr"].filter((k) => o[k]).map((k) => `      ${k}: ${S(o[k])},`).join("\n")}\n    }`;
+const extras = (o, known) => Object.keys(o).filter((k) => !known.includes(k)).map((k) => `\n    ${k}: ${S(o[k])},`).join("");
+
+const productJs = (p) => `  {
+    id: ${p.id}, code: ${S(p.code)}, category: ${S(p.category)}, price: ${p.price ?? 0}, oldPrice: ${p.oldPrice ?? null}, badge: ${S(p.badge ?? null)},
+    name: ${ml(p.name)},
+    description: ${mlBlock(p.description)},
+    colors: ${arr(p.colors)}, sizes: ${arr(p.sizes)},${p.asorti ? ` asorti: [${p.asorti.join(", ")}],` : ""}
+    images: ${arr(p.images)},${extras(p, ["id", "code", "category", "price", "oldPrice", "badge", "name", "description", "colors", "sizes", "asorti", "images"])}
+  },`;
+
+const heroJs = (h) => `  {
+    product: ${h.product},
+    image: ${S(h.image)},
+    focus: ${S(h.focus || "50% 50%")},${h.hotspot ? `\n    hotspot: { x: ${h.hotspot.x}, y: ${h.hotspot.y} },` : ""}
+    eyebrow: ${ml(h.eyebrow)},
+    text: ${mlBlock(h.text)},
+    label: ${S(h.label || "")},${extras(h, ["product", "image", "focus", "hotspot", "eyebrow", "text", "label"])}
+  },`;
+
+function buildFile() {
+  return `/* =========================================================
+   STUDIOUS MILANO — ÜRÜN LİSTESİ
+   ---------------------------------------------------------
+   Bu dosya yönetim panelinden (admin.html) güncellenir.
+   Elle düzenlemek de mümkündür: listeye bir blok kopyalayıp
+   bilgileri değiştirmeniz yeterli.
+
+   Kendi fotoğraflarınızı "assets/urunler/" klasörüne koyup
+   images kısmına şöyle yazın:  "assets/urunler/gomlek-1.jpg"
+
+   id          : Her ürün için farklı bir sayı
+   code        : Ürün kodu (WhatsApp mesajında görünür)
+   category    : takim | gomlek | tisort | sweat | ceket | pantolon | ayakkabi
+   name        : Ürün adı — { en: İngilizce, ru: Rusça, tr: Türkçe }
+   description : Açıklama — aynı şekilde üç dilde
+   price       : Toptan birim fiyat (TL) — SHOW_PRICES false iken görünmez
+   oldPrice    : İndirim varsa eski fiyat, yoksa null
+   badge       : "Yeni", "Çok Satan", "İndirim" veya null
+   colors      : Türkçe renk adları (i18n.js içinde çevrilir)
+   sizes       : Serideki bedenler, ör. ["S", "M", "L", "XL"]
+   asorti      : (isteğe bağlı) Bir seride her bedenden kaç adet olduğu,
+                 sizes ile aynı sırada. Ör. [1, 2, 2, 1] = 1 seri 6 adet.
+                 Yazılmazsa her bedenden 1 adet sayılır.
+   images      : İlk fotoğraf kartta görünür, ikincisi üzerine gelince
+   ========================================================= */
+
+// Fiyatlar sitede görünsün mü? (true = görünür, false = gizli)
+const SHOW_PRICES = ${!!data.SHOW_PRICES};
+
+// TOPTAN: Bir modelden alınabilecek en az seri sayısı
+const MIN_SERIES = ${data.MIN_SERIES};
+
+const U = (id, w = 900) =>
+  \`https://images.unsplash.com/photo-\${id}?w=\${w}&h=\${Math.round(w * 1.25)}&fit=crop&q=80&auto=format\`;
+
+const PRODUCTS = [
+${data.PRODUCTS.map(productJs).join("\n")}
+];
+
+/* =========================================================
+   ANA SAYFA AFİŞİ (en üstteki bölüm)
+   ---------------------------------------------------------
+   Başlıkta her zaman marka adı görünür. Listedeki ilk kayıt kullanılır.
+   product : Yukarıdaki listeden ürün id'si (fotoğrafa tıklayınca açılır)
+   image   : Afişte görünecek büyük fotoğraf
+   focus   : Fotoğraf kırpılırken ortada kalacak nokta
+   ========================================================= */
+const HERO_SLIDES = [
+${data.HERO_SLIDES.map(heroJs).join("\n")}
+];
+`;
+}
+
+// ---------- Yayınla ----------
+$("#publishBtn").addEventListener("click", async () => {
+  const btn = $("#publishBtn");
+  const text = buildFile();
+  // Güvenlik: oluşan dosya hatasız çalışmalı
+  try { new Function(text + "\nreturn PRODUCTS;")(); }
+  catch (e) { return toast("Dosya oluşturulamadı: " + e.message, true); }
+
+  btn.disabled = true;
+  try {
+    const used = new Set([...data.PRODUCTS.flatMap((p) => p.images), ...data.HERO_SLIDES.map((h) => h.image)]);
+    const uploads = Object.keys(pending).filter((p) => used.has(p));
+    for (const [i, path] of uploads.entries()) {
+      setBar(`Fotoğraflar yükleniyor… (${i + 1}/${uploads.length})`);
+      await gh(path, { method: "PUT", body: S({ message: `Panel: fotoğraf ${path.split("/").pop()}`, content: pending[path], branch: BRANCH }) });
+      delete pending[path];
+    }
+    setBar("Ürün listesi kaydediliyor…");
+    const r = await gh(FILE, { method: "PUT", body: S({ message: "Panel: ürün listesi güncellendi", content: toB64(text), sha: fileSha, branch: BRANCH }) });
+    fileSha = r.content.sha;
+    pending = {};
+    dirty = false;
+    setBar("Yayınlandı ✓ Site 1–2 dakika içinde güncellenir.", "ok");
+    toast("Yayınlandı ✓");
+    renderList();
+  } catch (e) {
+    btn.disabled = false;
+    if (e.status === 409 || e.status === 422)
+      setBar("Liste başka bir yerden değiştirilmiş. Değişikliklerinizi not alıp “Yenile”ye basın.", "bad");
+    else if (e.status === 401 || e.status === 403)
+      setBar("Anahtarın yazma izni yok veya süresi dolmuş. Çıkış yapıp yeni anahtarla girin.", "bad");
+    else setBar("Yayınlanamadı: " + e.message, "bad");
+  }
+});
+
+// ---------- Başlat ----------
+if (token) load().catch((e) => showLogin(e.status === 401 ? "Anahtarın süresi dolmuş, yeniden girin." : "Bağlanılamadı: " + e.message));
+else showLogin();
+</script>
+</body>
+</html>
